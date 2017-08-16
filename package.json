@@ -31,7 +31,8 @@
     "koa-etag": "3.0.0",
     "koa-logger": "3.0.1",
     "minimist": "1.2.0",
-    "osrm": "5.10.0"
+    "osrm": "5.10.0",
+    "promise-timeout": "^1.1.1"
   },
   "devDependencies": {
     "@mapbox/geojsonhint": "2.0.1",

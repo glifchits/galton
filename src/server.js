@@ -4,6 +4,7 @@ const cors = require('kcors');
 const etag = require('koa-etag');
 const Koa = require('koa');
 const logger = require('koa-logger');
+const timeout = require('promise-timeout').timeout;
 const OSRM = require('osrm');
 const isochrone = require('isochrone');
 const checkError = require('./middlewares/check-error');
@@ -39,7 +40,8 @@ const galton = (config) => {
   app.use(async (ctx) => {
     const query = parseQuery(ctx.request.query);
     const options = Object.assign({}, query, { osrm });
-    ctx.body = await isochrone([options.lng, options.lat], options);
+    const isochrones = isochrone([options.lng, options.lat], options);
+    ctx.body = await timeout(isochrones, config.timeout)
   });
 
   return app;

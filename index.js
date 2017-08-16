@@ -18,6 +18,7 @@ const config = minimist(process.argv.slice(2), {
     'resolution',
     'sharpness',
     'socket',
+    'timeout',
     'units'
   ],
   boolean: ['cors', 'deintersect', 'sharedMemory'],
@@ -35,6 +36,7 @@ const config = minimist(process.argv.slice(2), {
     lengthThreshold: defaults.lengthThreshold,
     port: 4000,
     sharedMemory: false,
+    timeout: 60000,
     units: defaults.units
   }
 });
@@ -59,6 +61,7 @@ if (config.help) {
     --port - port to run on (default: ${config.port})
     --sharedMemory - use shared memory (default: ${config.sharedMemory})
     --socket - use Unix socket instead of port
+    --timeout - milliseconds to wait for successful isochrones (default: ${config.timeout})
     --units - either 'kilometers' or 'miles' (default: '${config.units}')
     --version - returns running version then exits
 
@@ -88,6 +91,7 @@ try {
 }
 
 config.radius = parseFloat(config.radius);
+config.timeout = parseInt(config.timeout);
 config.cellSize = parseFloat(config.cellSize);
 config.concavity = parseFloat(config.concavity);
 config.deintersect = config.deintersect === 'true';
